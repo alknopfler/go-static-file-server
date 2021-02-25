@@ -16,7 +16,8 @@ var (
 func main() {
 	deadTime := flag.String("t", "10m", "Tiempo de duracion del enlace")
 	dirToShare := flag.String( "d", "./", "Directorio que vamos a compartir")
-	_ = flag.String("h", "", "Options available: -t=10m , -d='/home' ")
+	port := flag.String( "p", "8886", "Puerto a usar para el servidor")
+	_ = flag.String("h", "", "Options available: -t=10m , -d=/home, -p=8886")
 
 	flag.Parse()
 	dT, _ := time.ParseDuration(*deadTime)
@@ -24,7 +25,7 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir(*dirToShare)))
 	log.Println("Starting to share " + *dirToShare + " during " + *deadTime)
 
-	go http.ListenAndServe(":8886", nil)
+	go http.ListenAndServe(":"+*port, nil)
 
 	select {
 		case <-time.After(dT):

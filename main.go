@@ -24,7 +24,7 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir(*dirToShare)))
 	log.Println("Starting to share " + *dirToShare + " during " + *deadTime)
 
-	go http.ListenAndServe(":8887", nil)
+	go http.ListenAndServe(":8886", nil)
 
 	select {
 		case <-time.After(dT):
